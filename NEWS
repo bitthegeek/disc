@@ -1,0 +1,5 @@
+$Id: NEWS,v 1.2 2003/05/08 12:58:36 andrei Exp $
+
+version 0.1.1 - some build fixes (missing libraries) for the Stuttgart tests
+
+version 0.1.0 - initial release

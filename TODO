@@ -1,0 +1,24 @@
+$Id: TODO,v 1.10 2003/10/22 18:57:12 cco Exp $
+
+
+- different autoconf for modules [andrei]
+- shared lib from diameter_msg [andrei]
+
+
+- use *_config.h for autoconf
+- disable NAGLE, set TOS to low delay
+
+- command line interface (CISCO style) [cristian]
+- database interface for authentication (home server)
+- database interface for accounting (home server)
+- generic metering interface (aaa client) 
+
+
+diameter protocol features (RFC3588 - Diameter Base Protocol)
+- grouped avp [bogdan] (see 4.4 Grouped AVP Values)
+- avp dictionary support [ilya??]
+- EAP application support
+- TLS support
+- stateful server
+- dynamic peer discovery (by means of DNS - see 5.2 Diameter Peer
+  Discovery)

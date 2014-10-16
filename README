@@ -1,0 +1,196 @@
+$Id: README,v 1.6 2003/11/18 17:10:21 cco Exp $
+
+Note: this document assumes familiarity with Diameter Base Protocol
+(RFC3588) and diameter API (as specified by
+draft-ietf-aaa-diameter-api-03.txt)
+
+disc (DIameter Server Client) is an AAA diameter implementation. 
+disc can be configured to act as a diameter server or a diameter client.
+disc enables a flexible plug-in model for new applications. Third parties 
+can easily link their plug-ins with the server or client code and provide 
+thereby advanced and customised services.
+
+For more information see INSTALL and the example configurations in src/*.cfg.
+
+
+Configuration files
+--------------------
+
+default location for this files is {INSTALL_PATH}/etc/disc/. (default
+{INSTALL_PATH} is /usr/local/) default filename 
+(i.e. the one loaded when no -f option is specified) is "disc.cfg". two 
+examples are provided: aaa_server.cfg and aaa_client.cfg. 
+the configuration files have the format:
+
+	config_option = value
+
+disc will run as a server when: 
+
+	aaa_status = AAA_SERVER 
+
+and as a client when:
+
+	aaa_status = AAA_CLIENT
+for disc to be useful you'll need to specify one module which it has to
+run. there are two ways of locating modules:
+
+1. using module_path. you'll define something like  
+
+module_path=/here/is_the_path_where/I_keep/my/modules
+
+and after that you'll define the module to be loaded like:
+
+module=my_very_bloated_and_useless_module.so
+
+2. using a full path for the module:
+
+module=./client/modules/print/.libs/my_module
+(the path is relative to the directory where disc is started from)
+
+both in the case of a server and in the case of a client you will have to 
+define: its own realm (aaa_realm), its fqdn (aaa_fqdn) and its peers. 
+(note that for a client you'll define only one peer, the server to which
+the client has to connect)
+
+peers are defined like:
+
+peer = aaa_identity alias
+
+(example: peer  aaa://lugduf.mobis.fokus.gmd.de:1812;transport=tcp  lugduf)
+
+for the server you have to define the routing table. this is done by saying
+which is the next hop for a certain domain. a route in the routing table
+for the realm mobis.ip6 is:
+
+route mobis.ip6   lugduf 
+
+(assuming that lugduf was declared as an alias before. or is the actual 
+fqdn of the host)
+
+note that in the case of the server every next hop MUST be defined as a peer.
+
+Architecture
+------------
+disc is comprised of an core (which compiles to an elf executable image)
+and of several dynamically loaded modules (.so libraries).
+the core provides the following functionalities:
+	
+	o  peer connectivity management, diameter realm-based routing of AAA
+	commands, basic error/exception handling, AAA session management.
+	(features described in RFC3588)
+
+	o  diameter API (as specified by draft-ietf-aaa-diameter-api-03.txt)
+
+	o  an interface which gives the possibility of extending its features
+	by writing new modules. this is described below. 
+
+the modules are supposed to implement the behaviour of newly defined AAA
+applications (EAP, mobile-ipv6 application for AAA, mobile-ipv4
+application for AAA)
+
+Writing Modules
+---------------
+AAA application specific support in disc is implemented by means of
+custom modules. 
+
+the main data structure associated to a module is "struct module_exports" 
+which has the following definition:
+
+struct module_exports{
+    char* name; /* module name, must be unique */
+    unsigned int mod_type; /* module's type - server or client */
+    unsigned int app_id; /* application id*/
+    unsigned int flags; /* flags */
+    struct module_param* params;/* module parameters, null terminated array*/
+   
+    int (*mod_init)();   /* module initialization function */
+    void (*mod_destroy)(); /* called on exit */
+    
+    int (*mod_msg)(AAAMessage*, void*); /* called for each message */
+    int (*mod_tout)(int, AAASessionId*, void*);  /* called for all timeout */
+};
+
+a module has to implement the following functions:
+
+	o  int mod_init() - it is run at module loading and usually would
+	read configuration variables and set up the initial configuration.
+
+	o  void mod_destroy() - it is run on exit and it can be used 
+	for cleaning up.
+
+	o  int mod_msg(AAAMessage* message, void* context) - it is run by 
+	disc for every received AAA command belonging to the application 
+	implemented by the module. 
+	one specifies the AAA application implemented by the
+	module by setting the "app_id" field in the "struct module_exports"
+	data structure. 
+	the received message is pointed to by "message"; "context" points to
+	the arbitrary context related to the session this message is part
+	of. 
+
+	o  int mod_tout(int flags, AAASessionId* session, void* context) - 
+	two kinds of timeouts can occur: a session timeout or a transaction 
+	timeout. 
+	when either of the two appears and the module has to do with it (i.e. it
+	has created this session or transaction), then this function will be
+	called. the "flags" will tell you what kind of timeout has occurred:
+	flags==ANSWER_TIMEOUT_EVENT means a transaction timed out, whereas
+	flags==SESSION_TIMEOUT_EVENT means the end of a session.
+	the parameter "session" points to the actual value of the AAA session id, 
+	and "context" points to the arbitrary context related to this
+	session. 
+
+meaning of the other members of struct module_exports:
+
+	o  char *name - the name of the module;
+
+	o  unsigned int mod_type - can be either AAA_CLIENT or AAA_SERVER
+	depending on whether the module is supposed to be run by disc in 
+	client mode or in server mode;
+
+	o  unsigned int app_id - the AAA application for which this module is
+	intended. any incoming AAA command having Application-ID field in
+	the Diameter Header set to the value of app_id will be delivered to
+	this module;
+
+	o  unsigned int flags - specifies what kind of commands (pertaining 
+	to a certain application)  the module knows how to process:
+	authentication (DOES_AUTH), accounting (DOES_ACCT) or both
+	(DOES_AUTH|DOES_ACCT);  
+
+every module will have to define a global variable called "exports" of
+of type struct module_exports and to initialize it as described
+previously.  	
+
+Session Management
+------------------
+the core provides also AAA session management. a module has to
+initialize a new session by using: AAAStartSession(). the function takes
+three params:
+
+	o  AAASessionId **sessionId - here it will return a pointer to 
+	the newly created session;
+
+	o  AAAApplicationRef appReference - a reference to the exports data
+	structure of the calling module;
+
+	o  void *context - an arbitrary context belonging to this session.
+
+one can specify how long a session is supposed to take by using
+AAASessionTimerStart(). when a session expires, the module will receive
+an indication in the mod_tout function (see also the section about
+Writing Modules).
+	
+Diameter API
+------------
+for implementing disc modules one can rely on the diameter API functions
+already provided by the core. for that one needs to include 
+src/diameter_api/diameter_api.h. the implementation of this API is based
+on draft-ietf-aaa-diameter-api-03; however NOT all the functions
+specified there are implemented and the implementation is NOT provided
+(at least for the time being) as an separate library.
+
+
+modules are provided:
+
+1.  src/client/modules/print

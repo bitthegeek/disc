@@ -1,0 +1,578 @@
+# Makefile.in generated automatically by automake 1.4-p6 from Makefile.am
+
+# Copyright (C) 1994, 1995-8, 1999, 2001 Free Software Foundation, Inc.
+# This Makefile.in is free software; the Free Software Foundation
+# gives unlimited permission to copy and/or distribute it,
+# with or without modifications, as long as this notice is preserved.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY, to the extent permitted by law; without
+# even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+# PARTICULAR PURPOSE.
+
+
+SHELL = @SHELL@
+
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+VPATH = @srcdir@
+prefix = @prefix@
+exec_prefix = @exec_prefix@
+
+bindir = @bindir@
+sbindir = @sbindir@
+libexecdir = @libexecdir@
+datadir = @datadir@
+sharedstatedir = @sharedstatedir@
+localstatedir = @localstatedir@
+libdir = @libdir@
+infodir = @infodir@
+mandir = @mandir@
+includedir = @includedir@
+oldincludedir = /usr/include
+
+DESTDIR =
+
+pkgdatadir = $(datadir)/@PACKAGE@
+pkglibdir = $(libdir)/@PACKAGE@
+pkgincludedir = $(includedir)/@PACKAGE@
+
+top_builddir = ..
+
+ACLOCAL = @ACLOCAL@
+AUTOCONF = @AUTOCONF@
+AUTOMAKE = @AUTOMAKE@
+AUTOHEADER = @AUTOHEADER@
+
+INSTALL = @INSTALL@
+INSTALL_PROGRAM = @INSTALL_PROGRAM@ $(AM_INSTALL_PROGRAM_FLAGS)
+INSTALL_DATA = @INSTALL_DATA@
+INSTALL_SCRIPT = @INSTALL_SCRIPT@
+transform = @program_transform_name@
+
+NORMAL_INSTALL = :
+PRE_INSTALL = :
+POST_INSTALL = :
+NORMAL_UNINSTALL = :
+PRE_UNINSTALL = :
+POST_UNINSTALL = :
+host_alias = @host_alias@
+host_triplet = @host@
+AS = @AS@
+CC = @CC@
+CXX = @CXX@
+CXXCPP = @CXXCPP@
+DLLTOOL = @DLLTOOL@
+ECHO = @ECHO@
+EXEEXT = @EXEEXT@
+INCLTDL = @INCLTDL@
+LEX = @LEX@
+LIBLTDL = @LIBLTDL@
+LIBTOOL = @LIBTOOL@
+LN_S = @LN_S@
+MAKEINFO = @MAKEINFO@
+OBJDUMP = @OBJDUMP@
+OBJEXT = @OBJEXT@
+PACKAGE = @PACKAGE@
+RANLIB = @RANLIB@
+STRIP = @STRIP@
+VERSION = @VERSION@
+YACC = @YACC@
+client_module_dir = @client_module_dir@
+client_modules = @client_modules@
+server_module_dir = @server_module_dir@
+server_modules = @server_modules@
+
+SUBDIRS = diameter_msg diameter_api transport mem client server
+
+INCLUDES = @INCLTDL@
+
+bin_PROGRAMS = disc
+common = aaa_lock.c dprint.c hash_table.c 					timer.c aaa_module.c aaa_core.c route.c 					cfg_init.c cfg_parser.c aaa_parse_uri.c 					server.c client.c 					aaa_lock.h dprint.h hash.h lock_alloc.h sem.h 					timer.h config.h fastlock.h hash_table.h lock_ops.h 					utils.h counter.h globals.h msg_queue.h msg_queue.c 					list.h locking.h str.h aaa_module.h aaa_core.h 					cfg_init.h cfg_parser.h parser_f.h aaa_parse_uri.h 					route.h server.h client.h
+
+
+disc_SOURCES = $(common)
+# hash.c only for tests
+
+EXTRA_DIST = aaa_client.cfg aaa_server.cfg
+
+disc_LDADD = mem/libmem.la transport/libtransport.la 			diameter_api/libdiameter_api.la diameter_msg/libdiameter_msg.la 			@LIBLTDL@
+
+# @LIBADD_DL@ # not needed for newer libtool version (>=1.4)
+disc_LDFLAGS = -export-dynamic -pthread
+
+sysconfdir = @sysconfdir@/@PACKAGE@
+sysconf_DATA = aaa_client.cfg aaa_server.cfg 
+mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
+CONFIG_CLEAN_FILES = 
+bin_PROGRAMS =  disc$(EXEEXT)
+PROGRAMS =  $(bin_PROGRAMS)
+
+
+DEFS = @DEFS@ -I. -I$(srcdir) 
+CPPFLAGS = @CPPFLAGS@
+LDFLAGS = @LDFLAGS@
+LIBS = @LIBS@
+disc_OBJECTS =  aaa_lock.$(OBJEXT) dprint.$(OBJEXT) hash_table.$(OBJEXT) \
+timer.$(OBJEXT) aaa_module.$(OBJEXT) aaa_core.$(OBJEXT) route.$(OBJEXT) \
+cfg_init.$(OBJEXT) cfg_parser.$(OBJEXT) aaa_parse_uri.$(OBJEXT) \
+server.$(OBJEXT) client.$(OBJEXT) msg_queue.$(OBJEXT)
+disc_DEPENDENCIES =  mem/libmem.la transport/libtransport.la \
+diameter_api/libdiameter_api.la diameter_msg/libdiameter_msg.la
+CFLAGS = @CFLAGS@
+COMPILE = $(CC) $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+LTCOMPILE = $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+CCLD = $(CC)
+LINK = $(LIBTOOL) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(LDFLAGS) -o $@
+DATA =  $(sysconf_DATA)
+
+DIST_COMMON =  Makefile.am Makefile.in
+
+
+DISTFILES = $(DIST_COMMON) $(SOURCES) $(HEADERS) $(TEXINFOS) $(EXTRA_DIST)
+
+TAR = tar
+GZIP_ENV = --best
+SOURCES = $(disc_SOURCES)
+OBJECTS = $(disc_OBJECTS)
+
+all: all-redirect
+.SUFFIXES:
+.SUFFIXES: .S .c .lo .o .obj .s
+$(srcdir)/Makefile.in: Makefile.am $(top_srcdir)/configure.ac $(ACLOCAL_M4) 
+	cd $(top_srcdir) && $(AUTOMAKE) --gnu --include-deps src/Makefile
+
+Makefile: $(srcdir)/Makefile.in  $(top_builddir)/config.status
+	cd $(top_builddir) \
+	  && CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= $(SHELL) ./config.status
+
+
+mostlyclean-binPROGRAMS:
+
+clean-binPROGRAMS:
+	-test -z "$(bin_PROGRAMS)" || rm -f $(bin_PROGRAMS)
+
+distclean-binPROGRAMS:
+
+maintainer-clean-binPROGRAMS:
+
+install-binPROGRAMS: $(bin_PROGRAMS)
+	@$(NORMAL_INSTALL)
+	$(mkinstalldirs) $(DESTDIR)$(bindir)
+	@list='$(bin_PROGRAMS)'; for p in $$list; do \
+	  if test -f $$p; then \
+	    echo " $(LIBTOOL)  --mode=install $(INSTALL_PROGRAM) $$p $(DESTDIR)$(bindir)/`echo $$p|sed 's/$(EXEEXT)$$//'|sed '$(transform)'|sed 's/$$/$(EXEEXT)/'`"; \
+	    $(LIBTOOL)  --mode=install $(INSTALL_PROGRAM) $$p $(DESTDIR)$(bindir)/`echo $$p|sed 's/$(EXEEXT)$$//'|sed '$(transform)'|sed 's/$$/$(EXEEXT)/'`; \
+	  else :; fi; \
+	done
+
+uninstall-binPROGRAMS:
+	@$(NORMAL_UNINSTALL)
+	list='$(bin_PROGRAMS)'; for p in $$list; do \
+	  rm -f $(DESTDIR)$(bindir)/`echo $$p|sed 's/$(EXEEXT)$$//'|sed '$(transform)'|sed 's/$$/$(EXEEXT)/'`; \
+	done
+
+.c.o:
+	$(COMPILE) -c $<
+
+# FIXME: We should only use cygpath when building on Windows,
+# and only if it is available.
+.c.obj:
+	$(COMPILE) -c `cygpath -w $<`
+
+.s.o:
+	$(COMPILE) -c $<
+
+.S.o:
+	$(COMPILE) -c $<
+
+mostlyclean-compile:
+	-rm -f *.o core *.core
+	-rm -f *.$(OBJEXT)
+
+clean-compile:
+
+distclean-compile:
+	-rm -f *.tab.c
+
+maintainer-clean-compile:
+
+.c.lo:
+	$(LIBTOOL) --mode=compile $(COMPILE) -c $<
+
+.s.lo:
+	$(LIBTOOL) --mode=compile $(COMPILE) -c $<
+
+.S.lo:
+	$(LIBTOOL) --mode=compile $(COMPILE) -c $<
+
+mostlyclean-libtool:
+	-rm -f *.lo
+
+clean-libtool:
+	-rm -rf .libs _libs
+
+distclean-libtool:
+
+maintainer-clean-libtool:
+
+disc$(EXEEXT): $(disc_OBJECTS) $(disc_DEPENDENCIES)
+	@rm -f disc$(EXEEXT)
+	$(LINK) $(disc_LDFLAGS) $(disc_OBJECTS) $(disc_LDADD) $(LIBS)
+
+install-sysconfDATA: $(sysconf_DATA)
+	@$(NORMAL_INSTALL)
+	$(mkinstalldirs) $(DESTDIR)$(sysconfdir)
+	@list='$(sysconf_DATA)'; for p in $$list; do \
+	  if test -f $(srcdir)/$$p; then \
+	    echo " $(INSTALL_DATA) $(srcdir)/$$p $(DESTDIR)$(sysconfdir)/$$p"; \
+	    $(INSTALL_DATA) $(srcdir)/$$p $(DESTDIR)$(sysconfdir)/$$p; \
+	  else if test -f $$p; then \
+	    echo " $(INSTALL_DATA) $$p $(DESTDIR)$(sysconfdir)/$$p"; \
+	    $(INSTALL_DATA) $$p $(DESTDIR)$(sysconfdir)/$$p; \
+	  fi; fi; \
+	done
+
+uninstall-sysconfDATA:
+	@$(NORMAL_UNINSTALL)
+	list='$(sysconf_DATA)'; for p in $$list; do \
+	  rm -f $(DESTDIR)$(sysconfdir)/$$p; \
+	done
+
+# This directory's subdirectories are mostly independent; you can cd
+# into them and run `make' without going through this Makefile.
+# To change the values of `make' variables: instead of editing Makefiles,
+# (1) if the variable is set in `config.status', edit `config.status'
+#     (which will cause the Makefiles to be regenerated when you run `make');
+# (2) otherwise, pass the desired values on the `make' command line.
+
+@SET_MAKE@
+
+all-recursive install-data-recursive install-exec-recursive \
+installdirs-recursive install-recursive uninstall-recursive  \
+check-recursive installcheck-recursive info-recursive dvi-recursive:
+	@set fnord $(MAKEFLAGS); amf=$$2; \
+	dot_seen=no; \
+	target=`echo $@ | sed s/-recursive//`; \
+	list='$(SUBDIRS)'; for subdir in $$list; do \
+	  echo "Making $$target in $$subdir"; \
+	  if test "$$subdir" = "."; then \
+	    dot_seen=yes; \
+	    local_target="$$target-am"; \
+	  else \
+	    local_target="$$target"; \
+	  fi; \
+	  (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) $$local_target) \
+	   || case "$$amf" in *=*) exit 1;; *k*) fail=yes;; *) exit 1;; esac; \
+	done; \
+	if test "$$dot_seen" = "no"; then \
+	  $(MAKE) $(AM_MAKEFLAGS) "$$target-am" || exit 1; \
+	fi; test -z "$$fail"
+
+mostlyclean-recursive clean-recursive distclean-recursive \
+maintainer-clean-recursive:
+	@set fnord $(MAKEFLAGS); amf=$$2; \
+	dot_seen=no; \
+	rev=''; list='$(SUBDIRS)'; for subdir in $$list; do \
+	  rev="$$subdir $$rev"; \
+	  test "$$subdir" != "." || dot_seen=yes; \
+	done; \
+	test "$$dot_seen" = "no" && rev=". $$rev"; \
+	target=`echo $@ | sed s/-recursive//`; \
+	for subdir in $$rev; do \
+	  echo "Making $$target in $$subdir"; \
+	  if test "$$subdir" = "."; then \
+	    local_target="$$target-am"; \
+	  else \
+	    local_target="$$target"; \
+	  fi; \
+	  (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) $$local_target) \
+	   || case "$$amf" in *=*) exit 1;; *k*) fail=yes;; *) exit 1;; esac; \
+	done && test -z "$$fail"
+tags-recursive:
+	list='$(SUBDIRS)'; for subdir in $$list; do \
+	  test "$$subdir" = . || (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) tags); \
+	done
+
+tags: TAGS
+
+ID: $(HEADERS) $(SOURCES) $(LISP)
+	list='$(SOURCES) $(HEADERS)'; \
+	unique=`for i in $$list; do echo $$i; done | \
+	  awk '    { files[$$0] = 1; } \
+	       END { for (i in files) print i; }'`; \
+	here=`pwd` && cd $(srcdir) \
+	  && mkid -f$$here/ID $$unique $(LISP)
+
+TAGS: tags-recursive $(HEADERS) $(SOURCES)  $(TAGS_DEPENDENCIES) $(LISP)
+	tags=; \
+	here=`pwd`; \
+	list='$(SUBDIRS)'; for subdir in $$list; do \
+   if test "$$subdir" = .; then :; else \
+	    test -f $$subdir/TAGS && tags="$$tags -i $$here/$$subdir/TAGS"; \
+   fi; \
+	done; \
+	list='$(SOURCES) $(HEADERS)'; \
+	unique=`for i in $$list; do echo $$i; done | \
+	  awk '    { files[$$0] = 1; } \
+	       END { for (i in files) print i; }'`; \
+	test -z "$(ETAGS_ARGS)$$unique$(LISP)$$tags" \
+	  || (cd $(srcdir) && etags -o $$here/TAGS $(ETAGS_ARGS) $$tags  $$unique $(LISP))
+
+mostlyclean-tags:
+
+clean-tags:
+
+distclean-tags:
+	-rm -f TAGS ID
+
+maintainer-clean-tags:
+
+distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+
+subdir = src
+
+distdir: $(DISTFILES)
+	@for file in $(DISTFILES); do \
+	  d=$(srcdir); \
+	  if test -d $$d/$$file; then \
+	    cp -pr $$d/$$file $(distdir)/$$file; \
+	  else \
+	    test -f $(distdir)/$$file \
+	    || ln $$d/$$file $(distdir)/$$file 2> /dev/null \
+	    || cp -p $$d/$$file $(distdir)/$$file || :; \
+	  fi; \
+	done
+	for subdir in $(SUBDIRS); do \
+	  if test "$$subdir" = .; then :; else \
+	    test -d $(distdir)/$$subdir \
+	    || mkdir $(distdir)/$$subdir \
+	    || exit 1; \
+	    chmod 777 $(distdir)/$$subdir; \
+	    (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) top_distdir=../$(top_distdir) distdir=../$(distdir)/$$subdir distdir) \
+	      || exit 1; \
+	  fi; \
+	done
+aaa_core.o: aaa_core.c mem/shm_mem.h mem/../dprint.h mem/../lock_ops.h \
+	mem/../fastlock.h mem/q_malloc.h diameter_api/diameter_api.h \
+	diameter_api/../diameter_msg/diameter_msg.h \
+	diameter_api/../diameter_msg/../str.h transport/peer.h \
+	transport/../str.h transport/../locking.h \
+	transport/../lock_ops.h transport/../lock_alloc.h \
+	transport/../mem/mem.h transport/../mem/../config.h \
+	transport/../mem/../dprint.h transport/../mem/shm_mem.h \
+	transport/../timer.h transport/../aaa_lock.h \
+	transport/../list.h transport/../hash_table.h \
+	transport/../dprint.h transport/ip_addr.h transport/tcp_shell.h \
+	transport/trans.h transport/../counter.h \
+	transport/../diameter_api/session.h \
+	transport/../diameter_api/diameter_api.h \
+	transport/../diameter_api/../aaa_lock.h \
+	transport/../diameter_api/../hash_table.h \
+	transport/../diameter_api/../locking.h \
+	transport/../diameter_api/../timer.h server.h \
+	diameter_msg/diameter_msg.h client.h globals.h str.h timer.h \
+	utils.h msg_queue.h aaa_module.h cfg_init.h aaa_parse_uri.h \
+	route.h
+aaa_lock.o: aaa_lock.c aaa_lock.h locking.h lock_ops.h fastlock.h \
+	lock_alloc.h mem/mem.h mem/../config.h mem/../dprint.h \
+	mem/shm_mem.h mem/../lock_ops.h mem/q_malloc.h
+aaa_module.o: aaa_module.c ../libltdl/ltdl.h config.h dprint.h \
+	mem/shm_mem.h mem/../dprint.h mem/../lock_ops.h \
+	mem/../fastlock.h mem/q_malloc.h globals.h str.h aaa_module.h \
+	diameter_api/diameter_api.h \
+	diameter_api/../diameter_msg/diameter_msg.h \
+	diameter_api/../diameter_msg/../str.h
+aaa_parse_uri.o: aaa_parse_uri.c str.h dprint.h aaa_parse_uri.h
+cfg_init.o: cfg_init.c ../libltdl/ltdl.h diameter_api/diameter_api.h \
+	diameter_api/../diameter_msg/diameter_msg.h \
+	diameter_api/../diameter_msg/../str.h dprint.h cfg_init.h str.h \
+	aaa_parse_uri.h route.h transport/peer.h transport/../str.h \
+	transport/../locking.h transport/../lock_ops.h \
+	transport/../fastlock.h transport/../lock_alloc.h \
+	transport/../mem/mem.h transport/../mem/../config.h \
+	transport/../mem/../dprint.h transport/../mem/shm_mem.h \
+	transport/../mem/../lock_ops.h transport/../mem/q_malloc.h \
+	transport/../timer.h transport/../aaa_lock.h \
+	transport/../list.h transport/../hash_table.h \
+	transport/../dprint.h transport/ip_addr.h transport/tcp_shell.h \
+	transport/trans.h transport/../counter.h \
+	transport/../diameter_api/session.h \
+	transport/../diameter_api/diameter_api.h \
+	transport/../diameter_api/../aaa_lock.h \
+	transport/../diameter_api/../hash_table.h \
+	transport/../diameter_api/../locking.h \
+	transport/../diameter_api/../timer.h \
+	diameter_msg/diameter_msg.h cfg_parser.h globals.h aaa_module.h \
+	mem/shm_mem.h
+cfg_parser.o: cfg_parser.c cfg_parser.h str.h dprint.h parser_f.h \
+	mem/shm_mem.h mem/../dprint.h mem/../lock_ops.h \
+	mem/../fastlock.h mem/q_malloc.h
+client.o: client.c mem/shm_mem.h mem/../dprint.h mem/../lock_ops.h \
+	mem/../fastlock.h mem/q_malloc.h diameter_api/diameter_api.h \
+	diameter_api/../diameter_msg/diameter_msg.h \
+	diameter_api/../diameter_msg/../str.h transport/trans.h \
+	transport/../str.h transport/../dprint.h \
+	transport/../hash_table.h transport/../list.h \
+	transport/../locking.h transport/../lock_ops.h \
+	transport/../lock_alloc.h transport/../mem/mem.h \
+	transport/../mem/../config.h transport/../mem/../dprint.h \
+	transport/../mem/shm_mem.h transport/../timer.h \
+	transport/../aaa_lock.h transport/../counter.h transport/peer.h \
+	transport/ip_addr.h transport/tcp_shell.h \
+	transport/../diameter_api/session.h \
+	transport/../diameter_api/diameter_api.h \
+	transport/../diameter_api/../aaa_lock.h \
+	transport/../diameter_api/../hash_table.h \
+	transport/../diameter_api/../locking.h \
+	transport/../diameter_api/../timer.h dprint.h timer.h \
+	msg_queue.h str.h aaa_module.h
+dprint.o: dprint.c dprint.h
+hash_table.o: hash_table.c mem/shm_mem.h mem/../dprint.h \
+	mem/../lock_ops.h mem/../fastlock.h mem/q_malloc.h dprint.h \
+	list.h str.h aaa_lock.h locking.h lock_ops.h lock_alloc.h \
+	mem/mem.h mem/../config.h hash_table.h
+msg_queue.o: msg_queue.c dprint.h aaa_lock.h locking.h lock_ops.h \
+	fastlock.h lock_alloc.h mem/mem.h mem/../config.h \
+	mem/../dprint.h mem/shm_mem.h mem/../lock_ops.h mem/q_malloc.h \
+	msg_queue.h str.h transport/peer.h transport/../str.h \
+	transport/../locking.h transport/../timer.h \
+	transport/../aaa_lock.h transport/../list.h \
+	transport/../hash_table.h transport/../dprint.h \
+	transport/ip_addr.h transport/tcp_shell.h transport/trans.h \
+	transport/../counter.h transport/../diameter_api/session.h \
+	transport/../diameter_api/diameter_api.h \
+	transport/../diameter_api/../diameter_msg/diameter_msg.h \
+	transport/../diameter_api/../diameter_msg/../str.h \
+	transport/../diameter_api/../aaa_lock.h \
+	transport/../diameter_api/../hash_table.h \
+	transport/../diameter_api/../locking.h \
+	transport/../diameter_api/../timer.h
+route.o: route.c config.h globals.h str.h route.h aaa_parse_uri.h \
+	transport/peer.h transport/../str.h transport/../locking.h \
+	transport/../lock_ops.h transport/../fastlock.h \
+	transport/../lock_alloc.h transport/../mem/mem.h \
+	transport/../mem/../config.h transport/../mem/../dprint.h \
+	transport/../mem/shm_mem.h transport/../mem/../lock_ops.h \
+	transport/../mem/q_malloc.h transport/../timer.h \
+	transport/../aaa_lock.h transport/../list.h \
+	transport/../hash_table.h transport/../dprint.h \
+	transport/ip_addr.h transport/tcp_shell.h transport/trans.h \
+	transport/../counter.h transport/../diameter_api/session.h \
+	transport/../diameter_api/diameter_api.h \
+	transport/../diameter_api/../diameter_msg/diameter_msg.h \
+	transport/../diameter_api/../diameter_msg/../str.h \
+	transport/../diameter_api/../aaa_lock.h \
+	transport/../diameter_api/../hash_table.h \
+	transport/../diameter_api/../locking.h \
+	transport/../diameter_api/../timer.h \
+	diameter_msg/diameter_msg.h dprint.h mem/shm_mem.h
+server.o: server.c mem/shm_mem.h mem/../dprint.h mem/../lock_ops.h \
+	mem/../fastlock.h mem/q_malloc.h dprint.h timer.h aaa_lock.h \
+	locking.h lock_ops.h lock_alloc.h mem/mem.h mem/../config.h \
+	globals.h str.h list.h msg_queue.h transport/peer.h \
+	transport/../str.h transport/../locking.h transport/../timer.h \
+	transport/../list.h transport/../hash_table.h \
+	transport/../dprint.h transport/ip_addr.h transport/tcp_shell.h \
+	transport/trans.h transport/../counter.h \
+	transport/../diameter_api/session.h \
+	transport/../diameter_api/diameter_api.h \
+	transport/../diameter_api/../diameter_msg/diameter_msg.h \
+	transport/../diameter_api/../diameter_msg/../str.h \
+	transport/../diameter_api/../aaa_lock.h \
+	transport/../diameter_api/../hash_table.h \
+	transport/../diameter_api/../locking.h \
+	transport/../diameter_api/../timer.h aaa_module.h \
+	diameter_api/diameter_api.h route.h aaa_parse_uri.h \
+	diameter_msg/diameter_msg.h
+timer.o: timer.c dprint.h aaa_lock.h locking.h lock_ops.h fastlock.h \
+	lock_alloc.h mem/mem.h mem/../config.h mem/../dprint.h \
+	mem/shm_mem.h mem/../lock_ops.h mem/q_malloc.h timer.h
+
+info-am:
+info: info-recursive
+dvi-am:
+dvi: dvi-recursive
+check-am: all-am
+check: check-recursive
+installcheck-am:
+installcheck: installcheck-recursive
+install-exec-am: install-binPROGRAMS install-sysconfDATA
+install-exec: install-exec-recursive
+
+install-data-am:
+install-data: install-data-recursive
+
+install-am: all-am
+	@$(MAKE) $(AM_MAKEFLAGS) install-exec-am install-data-am
+install: install-recursive
+uninstall-am: uninstall-binPROGRAMS uninstall-sysconfDATA
+uninstall: uninstall-recursive
+all-am: Makefile $(PROGRAMS) $(DATA)
+all-redirect: all-recursive
+install-strip:
+	$(MAKE) $(AM_MAKEFLAGS) AM_INSTALL_PROGRAM_FLAGS=-s install
+installdirs: installdirs-recursive
+installdirs-am:
+	$(mkinstalldirs)  $(DESTDIR)$(bindir) $(DESTDIR)$(sysconfdir)
+
+
+mostlyclean-generic:
+
+clean-generic:
+
+distclean-generic:
+	-rm -f Makefile $(CONFIG_CLEAN_FILES)
+	-rm -f config.cache config.log stamp-h stamp-h[0-9]*
+
+maintainer-clean-generic:
+mostlyclean-am:  mostlyclean-binPROGRAMS mostlyclean-compile \
+		mostlyclean-libtool mostlyclean-tags \
+		mostlyclean-generic
+
+mostlyclean: mostlyclean-recursive
+
+clean-am:  clean-binPROGRAMS clean-compile clean-libtool clean-tags \
+		clean-generic mostlyclean-am
+
+clean: clean-recursive
+
+distclean-am:  distclean-binPROGRAMS distclean-compile distclean-libtool \
+		distclean-tags distclean-generic clean-am
+	-rm -f libtool
+
+distclean: distclean-recursive
+
+maintainer-clean-am:  maintainer-clean-binPROGRAMS \
+		maintainer-clean-compile maintainer-clean-libtool \
+		maintainer-clean-tags maintainer-clean-generic \
+		distclean-am
+	@echo "This command is intended for maintainers to use;"
+	@echo "it deletes files that may require special tools to rebuild."
+
+maintainer-clean: maintainer-clean-recursive
+
+.PHONY: mostlyclean-binPROGRAMS distclean-binPROGRAMS clean-binPROGRAMS \
+maintainer-clean-binPROGRAMS uninstall-binPROGRAMS install-binPROGRAMS \
+mostlyclean-compile distclean-compile clean-compile \
+maintainer-clean-compile mostlyclean-libtool distclean-libtool \
+clean-libtool maintainer-clean-libtool uninstall-sysconfDATA \
+install-sysconfDATA install-data-recursive uninstall-data-recursive \
+install-exec-recursive uninstall-exec-recursive installdirs-recursive \
+uninstalldirs-recursive all-recursive check-recursive \
+installcheck-recursive info-recursive dvi-recursive \
+mostlyclean-recursive distclean-recursive clean-recursive \
+maintainer-clean-recursive tags tags-recursive mostlyclean-tags \
+distclean-tags clean-tags maintainer-clean-tags distdir info-am info \
+dvi-am dvi check check-am installcheck-am installcheck install-exec-am \
+install-exec install-data-am install-data install-am install \
+uninstall-am uninstall all-redirect all-am all installdirs-am \
+installdirs mostlyclean-generic distclean-generic clean-generic \
+maintainer-clean-generic clean mostlyclean distclean maintainer-clean
+
+
+@SET_MAKE@
+
+# Tell versions [3.59,3.63) of GNU make to not export all variables.
+# Otherwise a system limit (for SysV at least) may be exceeded.
+.NOEXPORT:

@@ -1,0 +1,29 @@
+# $Id: AUTHORS,v 1.2 2003/04/22 19:51:16 andrei Exp $
+# The format of this file was inspired by the Linux kernel CREDITS file.
+# 
+# Authors and contributors are listed alphabetically (first name).
+# 
+# The fields are: name (N), email (E), web-address (W), CVS account login (C),
+# PGP key ID and fingerprint (P), description (D), and snail-mail address (S).
+
+N: Andrei Pelinescu - Onciul
+C: andrei
+E: pelinescu-onciul@fokus.fraunhofer.de
+P: 2CF56A2D   D96D 8B80 BA31 9B93 6208  5D68 3910 FA00 2CF5 6A2D
+D: 
+
+N: Bogdan Andrei Iancu
+C: bogdan
+E: iancu@fokus.fraunhofer.de
+D:
+
+N: Cristian Constantin
+C: cco
+E: constantin@fokus.fraunhofer.de
+D:
+
+
+N: John Williams Floroiu 
+C: john
+E: floroiu@fokus.fraunhofer.de
+D:

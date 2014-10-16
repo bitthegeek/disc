@@ -1,0 +1,67 @@
+#$Id: INSTALL,v 1.7 2003/11/18 18:15:10 cco Exp $
+
+
+Compilation
+-----------
+
+1. From CVS
+-----------
+
+cvs co disc
+./rebuild ; make
+
+if you've already run ./rebuild at some past time, use only
+./configure ; make
+or just make if you are compiling on the same machine.
+
+(if you want to regenerate everything, including libtltdl and scripts,
+you should run first ./bootstrap but you need decently recent versions of
+autoconf, automake & libtool)
+
+
+2. From tar.gz (distribution)
+--------------
+
+tar zxvf disc-VER_NO.tar.gz
+./configure 
+make
+make install (or make DESTDIR=/tmp/foo install)
+
+Creating a distribution
+-----------------------
+
+(you should have the full cvs version)
+
+./configure 
+make dist
+
+
+Troubleshooting
+---------------
+
+Check if your auto* and libtool version are >= than the ones listed at the 
+begining of configure.ac.
+On FreeBSD the libtool 1.4.2 generated script will not properly link the 
+binary. It will eat -lc_r for some reason and it will not pass it to gcc.
+
+If you get automake errors try ./bootstrap. If you don't have libtool try
+ aclocal; ./rebuild.
+
+
+
+Installation
+------------
+
+make install
+
+or
+
+make DESTDIR=/your_destination_dir install
+
+
+Other usefull targets
+---------------------
+
+make dist-gzip     - tar.gz  archive
+make dist-bzip2    - tar.bz2 archive
+make distclean     - cleans everything configure generated
