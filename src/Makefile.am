@@ -12,7 +12,8 @@
 
 SUBDIRS = diameter_msg diameter_api transport mem client server
 
-INCLUDES = @INCLTDL@
+#INCLUDES = @INCLTDL@
+AM_CPPFLAGS = @INCLTDL@
 
 bin_PROGRAMS = disc
 common =			aaa_lock.c dprint.c hash_table.c \

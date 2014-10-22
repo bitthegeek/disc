@@ -28,8 +28,11 @@ AC_INIT(disc, 0.2.0)
 AC_CONFIG_SRCDIR([src/aaa_lock.c])
 ##AC_CONFIG_HEADERS([ac_config.h])
 AC_CONFIG_SUBDIRS(libltdl)
-AM_INIT_AUTOMAKE(AC_PACKAGE_NAME, AC_PACKAGE_VERSION, 
-					[nostdinc dist-bzip2 dist-shar dist-zip dist-tarZ])
+# as suggested by libtoolize
+AC_CONFIG_MACRO_DIR([m4])
+#AM_INIT_AUTOMAKE(AC_PACKAGE_NAME, AC_PACKAGE_VERSION, 
+#					[nostdinc dist-bzip2 dist-shar dist-zip dist-tarZ])
+AM_INIT_AUTOMAKE
 # AM_MAINTAINER_MODE
 
 dnl use a default cache file (autoconf2 uses /dev/null by default)
@@ -120,55 +123,55 @@ client_modules=""
 server_module_dir=server
 client_module_dir=client
 	
-AC_ARG_WITH(mipv6_modules, 
-				AC_HELP_STRING([--with-mipv6_modules],
-                        [compile both the mipv6 server and client module (default is NO)]))
+dnl AC_ARG_WITH(mipv6_modules, 
+dnl 				AC_HELP_STRING([--with-mipv6_modules],
+dnl                         [compile both the mipv6 server and client module (default is NO)]))
+dnl 
+dnl if test -z "$with_mipv6_modules"; then
+dnl 	with_mipv6_modules=no
+dnl fi
+dnl if test "$with_mipv6_modules" = yes; then
+dnl 	with_mipv6_server_module=yes
+dnl 	with_mipv6_client_module=yes
+dnl fi
+dnl 
+dnl AC_ARG_WITH(mipv6_server_module, 
+dnl 				AC_HELP_STRING([--with-mipv6_server_module],
+dnl                         [compile the mipv6 server module (default is NO)]))
+dnl if test -z "$with_mipv6_server_module"; then
+dnl 	with_mipv6_server_module=no
+dnl fi
+dnl 
+dnl if test "$with_mipv6_server_module" = yes; then
+dnl 	extra_output="$extra_output src/server/modules/mipv6_server/Makefile \
+dnl 					src/server/modules/mipv6_server/asm/Makefile \
+dnl 					src/server/modules/mipv6_server/asm/copsApi/Makefile"
+dnl 	AC_CONFIG_FILES([ src/server/modules/mipv6_server/Makefile
+dnl 					  src/server/modules/mipv6_server/asm/Makefile
+dnl 					  src/server/modules/mipv6_server/asm/copsApi/Makefile ])
+dnl 	server_modules="$server_modules mipv6_server"
+dnl 	ssl_check=yes
+dnl fi
 
-if test -z "$with_mipv6_modules"; then
-	with_mipv6_modules=no
-fi
-if test "$with_mipv6_modules" = yes; then
-	with_mipv6_server_module=yes
-	with_mipv6_client_module=yes
-fi
-
-AC_ARG_WITH(mipv6_server_module, 
-				AC_HELP_STRING([--with-mipv6_server_module],
-                        [compile the mipv6 server module (default is NO)]))
-if test -z "$with_mipv6_server_module"; then
-	with_mipv6_server_module=no
-fi
-
-if test "$with_mipv6_server_module" = yes; then
-	extra_output="$extra_output src/server/modules/mipv6_server/Makefile \
-					src/server/modules/mipv6_server/asm/Makefile \
-					src/server/modules/mipv6_server/asm/copsApi/Makefile"
-	AC_CONFIG_FILES([ src/server/modules/mipv6_server/Makefile
-					  src/server/modules/mipv6_server/asm/Makefile
-					  src/server/modules/mipv6_server/asm/copsApi/Makefile ])
-	server_modules="$server_modules mipv6_server"
-	ssl_check=yes
-fi
-
-AC_ARG_WITH(mipv6_client_module, 
-				AC_HELP_STRING([--with-mipv6_client_module],
-                        [compile the mipv6 client module (default is NO)]))
-if test -z "$with_mipv6_client_module"; then
-	with_mipv6_client_module=no
-fi
-
-if test "$with_mipv6_client_module" = yes; then
-	extra_output="$extra_output src/client/modules/mipv6/Makefile"
-	AC_CONFIG_FILES([src/client/modules/mipv6/Makefile
-						src/client/modules/mipv6/libmeter/Makefile
-						src/client/modules/mipv6/logger/Makefile
-						src/client/modules/mipv6/logger/common/Makefile
-						src/client/modules/mipv6/logger/regLogger/Makefile ])
-	client_modules="$client_modules mipv6"
-	ssl_check=yes
-dnl add here mipv6/urp autoconf ?
-    AC_CONFIG_SUBDIRS(src/client/modules/mipv6/urp-0.0.7)
-fi
+dnl AC_ARG_WITH(mipv6_client_module, 
+dnl 				AC_HELP_STRING([--with-mipv6_client_module],
+dnl                         [compile the mipv6 client module (default is NO)]))
+dnl if test -z "$with_mipv6_client_module"; then
+dnl 	with_mipv6_client_module=no
+dnl fi
+dnl 
+dnl if test "$with_mipv6_client_module" = yes; then
+dnl 	extra_output="$extra_output src/client/modules/mipv6/Makefile"
+dnl 	AC_CONFIG_FILES([src/client/modules/mipv6/Makefile
+dnl 						src/client/modules/mipv6/libmeter/Makefile
+dnl 						src/client/modules/mipv6/logger/Makefile
+dnl 						src/client/modules/mipv6/logger/common/Makefile
+dnl 						src/client/modules/mipv6/logger/regLogger/Makefile ])
+dnl 	client_modules="$client_modules mipv6"
+dnl 	ssl_check=yes
+dnl dnl add here mipv6/urp autoconf ?
+dnl     AC_CONFIG_SUBDIRS(src/client/modules/mipv6/urp-0.0.7)
+dnl fi
 
 dnl FIXME: replace the following defines as above
 
@@ -263,7 +266,7 @@ AC_C_BIGENDIAN
 dnl Checks for libraries (warning for HAVE_* run AC_CHECK_FUNCTION)
 #AC_SEARCH_LIBS([dlopen], [dl c_r])
 AC_SEARCH_LIBS([pthread_create], [pthread c_r])
-AC_SEARCH_LIBS([res_search], [resolv])
+#AC_SEARCH_LIBS([res_search], [resolv])
 dnl solaris libs
 AC_SEARCH_LIBS([sendto], [socket xnet])
 AC_SEARCH_LIBS([gethostbyname], [nsl xnet])
@@ -282,7 +285,7 @@ fi
 dnl Checks for header files
 AC_HEADER_STDC
 AC_HEADER_SYS_WAIT
-AC_CHECK_HEADERS([sys/sockio.h])
+#AC_CHECK_HEADERS([sys/sockio.h])
 AC_CHECK_HEADERS([arpa/inet.h fcntl.h limits.h netdb.h netinet/in.h stddef.h stdlib.h string.h strings.h sys/ioctl.h sys/socket.h sys/time.h syslog.h unistd.h ], , AC_MSG_ERROR(["*** not all required *.h files found - please fix ***"]))
 
 
@@ -308,7 +311,8 @@ AC_TYPE_SIGNAL
 ## AC_FUNC_STRFTIME
 ## AC_FUNC_VPRINTF
 
- AC_CHECK_FUNCS([gethostbyaddr gettimeofday inet_ntoa localtime_r memchr memmove memset mkfifo munmap regcomp select socket strcasecmp strchr strdup strerror strncasecmp strtol uname pthread_create res_search sendto], ,
+ #AC_CHECK_FUNCS([gethostbyaddr gettimeofday inet_ntoa localtime_r memchr memmove memset mkfifo munmap regcomp select socket strcasecmp strchr strdup strerror strncasecmp strtol uname pthread_create res_search sendto], ,
+ AC_CHECK_FUNCS([gethostbyaddr gettimeofday inet_ntoa localtime_r memchr memmove memset mkfifo munmap regcomp select socket strcasecmp strchr strdup strerror strncasecmp strtol uname pthread_create sendto], ,
  AC_MSG_ERROR(["*** not all required functions found - please fix ***"]))
  AC_CHECK_FUNCS([sched_yield],,)
 

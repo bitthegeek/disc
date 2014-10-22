@@ -9,6 +9,8 @@
 
 @SET_MAKE@
 
+ACLOCAL_AMFLAGS=-I m4
+
 SUBDIRS = libltdl src
 
 EXTRA_DIST= ccopts.sh ccver.sh

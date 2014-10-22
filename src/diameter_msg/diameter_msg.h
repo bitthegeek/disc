@@ -338,7 +338,8 @@ AAA_AVP* AAACreateAVP(
 		AAA_AVPFlag flags,
 		AAAVendorId vendorId,
 		char *data,
-		size_t length,
+		// size_t length,
+		unsigned int length, // to accomodate picky gcc errors
 		AVPDataStatus data_status);
 
 AAA_AVP* AAACloneAVP(

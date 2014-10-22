@@ -85,8 +85,7 @@ AAAReturnCode  AAASendMessage(AAAMessage *msg)
 		goto error;
 
 	if (msg->commandCode==257||msg->commandCode==280||msg->commandCode==282) {
-		LOG(L_ERR,"ERROR:AAASendMessage: you are not ALLOWED to send this"
-			" type of message (%d) -> read the draft!!!\n",msg->commandCode);
+		LOG(L_ERR,"ERROR:AAASendMessage: you are not ALLOWED to send this type of message (%d) -> read the draft!!!\n",msg->commandCode);
 		goto error;
 	}
 
@@ -99,8 +98,7 @@ AAAReturnCode  AAASendMessage(AAAMessage *msg)
 	if ( !is_req(msg) ) {
 		/* it's a response */
 		if (my_aaa_status==AAA_CLIENT) {
-			LOG(L_ERR,"ERROR:AAASendMessage: AAA client does not send answers
-				!! -> read the draft!!!\n");
+			LOG(L_ERR,"ERROR:AAASendMessage: AAA client does not send answers!! -> read the draft!!!\n");
 			goto error;
 		}
 

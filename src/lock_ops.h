@@ -59,6 +59,9 @@ Implements:
 WARNING: signals are not treated! (some locks are "awakened" by the signals)
 */
 
+// some "fixes" to accomodate undetected settings
+#define USE_PTHREAD_MUTEX
+
 #ifndef _lock_ops_h
 #define _lock_ops_h
 
